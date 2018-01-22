@@ -4,7 +4,6 @@ var express = require("express")
 var router = express.Router()
 const user = require('./user.js')
 const wiki = require('./wiki.js')
-//res.render('index')
 
 
 router.use('/wiki', wiki)
