@@ -11,8 +11,6 @@ router.get('/',function(req,res,next){
 })
 router.post('/', function(req,res,next){
 	//if(err) return next(err)
-	//res.send('posting to the /wiki page')
-	
 
 	var page = Page.build({
 		title: req.body.title,
@@ -24,26 +22,28 @@ router.post('/', function(req,res,next){
 
 	})
 
-	page.save().then(function(page){
-		res.json(page.route);
+	page.save()
+	.then(function(page){
+		console.log(page)
+		res.redirect(page.route);
 	})
 })
+
 
 router.get('/add',function(req,res,next){
 	//if(err) return next(err) //we dont know whats happening here?!
-	//res.send('adder page')
 	res.render('addpage')
 })
-router.get('/:urlTitle',function(req,res,next){
-	//res.send('/wiki/'+req.params.urlTitle)
 
+//anything hardcoded need to be BEFORE anything dynamic
+router.get('/:urlTitle',function(req,res,next){
 	Page.findOne({
-		where:{urlTitle:req.params.urlTitle}
+		where:{urlTitle: req.params.urlTitle}
 	})
-	.then(function(foundpage){
-		//res.json(foundpage)
-		res.render('wikipage',{
-			page:foundpage
+	.then(function(foundPage){
+		// res.json(foundpage)
+		res.render('wikipage', {
+			page: foundPage
 		})
 	})
 	.catch(next)
